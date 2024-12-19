@@ -28,7 +28,6 @@ class RecentOrderAdapter(
         val deliveryAddress: TextView = view.findViewById(R.id.recent_order_delivery_address)
         val specialInstructions: TextView = view.findViewById(R.id.recent_order_special_instructions)
         val orderDate: TextView = view.findViewById(R.id.recent_order_date)
-        val orderTime: TextView = view.findViewById(R.id.recent_order_time)
         val orderAgainButton: Button = view.findViewById(R.id.order_again_btn)
         val orderItemsRecyclerView: RecyclerView = view.findViewById(R.id.recent_order_items_recyclerview)
     }
@@ -47,7 +46,6 @@ class RecentOrderAdapter(
         holder.deliveryAddress.text = "Delivery Address: " + order.deliveryAddress
         holder.specialInstructions.text = "Special instructions: " + order.specialInstructions
         holder.orderDate.text = "Date: " + order.timestamp?.toDate()?.let { formatDate(it) }
-        holder.orderTime.text = "Time: " + order.orderTime
 
         // Set up the RecyclerView for order items
         val orderItemsAdapter = OrderDetailsAdapter(order.items ?: emptyList())

@@ -1,5 +1,6 @@
 package iu.c323.fall2024.afinal
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.Query
 import iu.c323.fall2024.afinal.databinding.FragmentHomeBinding
 import iu.c323.fall2024.afinal.model.Order
 import iu.c323.fall2024.afinal.model.Restaurant
+import java.util.Calendar
 
 private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
@@ -83,6 +85,9 @@ class HomeFragment : Fragment() {
                 }
                 else -> false
             }
+        }
+        binding.calendarViewBtn.setOnClickListener{
+            showCalendarDialog()
         }
 
         // Fetch data from Firestore
@@ -154,5 +159,23 @@ class HomeFragment : Fragment() {
                 }
                 allRestaurantsAdapter.submitList(allRestaurants)
             }
+    }
+
+    private fun showCalendarDialog() {
+        val calendar = Calendar.getInstance()
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            Toast.makeText(requireContext(), "Selected Date: $selectedDate", Toast.LENGTH_SHORT).show()
+        }
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            dateSetListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
     }
 }

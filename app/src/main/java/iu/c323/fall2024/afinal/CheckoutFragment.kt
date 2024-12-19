@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +30,7 @@ class CheckoutFragment : Fragment() {
     private lateinit var binding: FragmentCheckoutBinding
     private lateinit var orderItemAdapter: OrderItemAdapter
     private var orderItems: MutableList<MenuItemWithQuantity> = mutableListOf()
+    private lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +42,34 @@ class CheckoutFragment : Fragment() {
         val orderItemsArray = arguments?.getParcelableArray("orderItems")
         val restaurant = arguments?.getParcelable<Restaurant>("restaurant")
         orderItems = orderItemsArray?.filterIsInstance<MenuItemWithQuantity>()?.toMutableList() ?: mutableListOf()
+
+        binding.checkoutRecyclerView.layoutManager = LinearLayoutManager(context)
+        orderItemAdapter = OrderItemAdapter(orderItems) { orderItem, quantity ->
+            orderItem.quantity = quantity
+        }
+        binding.checkoutRecyclerView.adapter = orderItemAdapter
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val item = orderItems[position]
+
+                // Remove the item from the list and update the adapter
+                orderItems.removeAt(position)
+                orderItemAdapter.notifyItemRemoved(position)
+
+                Toast.makeText(requireContext(), "${item.menuItem.name} removed", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.checkoutRecyclerView)
 
         binding.checkoutRecyclerView.layoutManager = LinearLayoutManager(context)
         orderItemAdapter = OrderItemAdapter(orderItems) { orderItem, quantity ->

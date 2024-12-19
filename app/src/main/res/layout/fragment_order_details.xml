@@ -51,12 +51,6 @@
         android:text="Date"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/order_details_order_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"
-        android:textSize="16sp" />
 
     <android.widget.Button
         android:id="@+id/track_order_button"

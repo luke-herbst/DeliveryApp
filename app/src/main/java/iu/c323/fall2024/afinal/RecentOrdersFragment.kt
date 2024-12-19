@@ -10,11 +10,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import iu.c323.fall2024.afinal.databinding.FragmentCheckoutBinding
@@ -43,6 +45,26 @@ class RecentOrdersFragment : Fragment() {
     ): View? {
         binding = FragmentRecentOrdersBinding.inflate(inflater, container, false)
         db = FirebaseFirestore.getInstance()
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.nav_recent_orders -> {
+                    findNavController().navigate(R.id.recentOrdersFragment)
+                    true
+                }
+                R.id.nav_home -> {
+                    findNavController().navigate(R.id.homeFragment)
+                    true
+                }R.id.nav_sign_out ->{
+                val auth = FirebaseAuth.getInstance()
+                auth.signOut()
+                Toast.makeText(requireContext(), "Signed out", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.signUpFragment)
+                true
+            }
+                else -> false
+            }
+        }
         return binding.root
 
     }

@@ -39,7 +39,26 @@ class OrderDetailsFragment : Fragment() {
         binding.orderDetailsDeliveryAddress.text = "Delivery address: " + order.deliveryAddress
         binding.orderDetailsSpecialInstructions.text = "Special instructions: " + order.specialInstructions
         binding.orderDetailsOrderDate.text = "Date: " + DateFormat.getDateInstance().format(Calendar.getInstance().time)
-        binding.orderDetailsOrderTime.text = "Time: " + DateFormat.getTimeInstance().format(Calendar.getInstance().time)
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.nav_recent_orders -> {
+                    findNavController().navigate(R.id.recentOrdersFragment)
+                    true
+                }
+                R.id.nav_home -> {
+                    findNavController().navigate(R.id.homeFragment)
+                    true
+                }R.id.nav_sign_out ->{
+                val auth = FirebaseAuth.getInstance()
+                auth.signOut()
+                Toast.makeText(requireContext(), "Signed out", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.signUpFragment)
+                true
+            }
+                else -> false
+            }
+        }
 
         // Set up the RecyclerView
         val recyclerView = binding.orderDetailsItemsRecyclerview

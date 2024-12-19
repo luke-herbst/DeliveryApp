@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import iu.c323.fall2024.afinal.model.MenuItemWithQuantity
 
 class OrderItemAdapter(
-    private var orderItems: List<MenuItemWithQuantity>, // List of MenuItemWithQuantity
+    private var orderItems: MutableList<MenuItemWithQuantity>, // Mutable list for direct modification
     private val onQuantityChange: (MenuItemWithQuantity, Int) -> Unit
 ) : RecyclerView.Adapter<OrderItemAdapter.OrderItemViewHolder>() {
 
@@ -56,7 +56,8 @@ class OrderItemAdapter(
 
     // Add a function to update the list of items
     fun updateOrderItems(updatedItems: List<MenuItemWithQuantity>) {
-        this.orderItems = updatedItems
+        this.orderItems = updatedItems.toMutableList()
         notifyDataSetChanged()
     }
 }
+
