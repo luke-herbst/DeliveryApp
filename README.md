@@ -25,7 +25,7 @@ The following **required** functionality is completed:
 
 Here's a walkthrough of implemented user stories:
 
-<img src="https://github.com/user-attachments/assets/67ad7154-222f-49a8-ad26-1e57160312ef" width=250/>
+<img src="https://github.com/user-attachments/assets/e6017a6e-cad1-446a-a592-d36c041810c3" width=250/>
 
 ## Notes
 
