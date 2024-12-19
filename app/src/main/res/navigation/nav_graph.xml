@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="iu.c323.fall2024.afinal.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="iu.c323.fall2024.afinal.HomeFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/to_restaurant_fragment"
+            app:destination="@id/restaurantFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/restaurantFragment"
+        android:name="iu.c323.fall2024.afinal.RestaurantFragment"
+        android:label="OrderFragment">
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_restaurantFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment">
+            <argument
+                android:name="orderItems"
+                app:argType="iu.c323.fall2024.afinal.model.MenuItemWithQuantity[]"
+                app:nullable="true" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="iu.c323.fall2024.afinal.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout">
+        <argument
+            android:name="orderItems"
+            app:argType="iu.c323.fall2024.afinal.model.MenuItemWithQuantity[]"
+            app:nullable="true" />
+        <argument
+            android:name="restaurant"
+            app:argType="iu.c323.fall2024.afinal.model.Restaurant"/>
+        <action
+            android:id="@+id/action_checkoutFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="iu.c323.fall2024.afinal.OrderDetailsFragment"
+        android:label="Order Details" >
+        <argument
+            android:name="order"
+            app:argType="iu.c323.fall2024.afinal.model.Order"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentOrdersFragment"
+        android:name="iu.c323.fall2024.afinal.RecentOrdersFragment"
+        android:label="RecentOrderFragment" >
+        <action
+            android:id="@+id/action_recentOrdersFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="iu.c323.fall2024.afinal.MapFragment"
+        android:label="MapFragment">
+        <argument
+            android:name="restaurant"
+            app:argType="iu.c323.fall2024.afinal.model.Restaurant"
+            app:nullable="true"/>
+        <argument
+            android:name="destinationLat"
+            app:argType="string"
+            app:nullable="true"
+            />
+        <argument
+            android:name="destinationLng"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

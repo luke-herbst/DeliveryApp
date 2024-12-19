@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Final</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="channel_name">Notification Channel</string>
+    <string name="channel_description">Channel for delivery notifications</string>
+    <string name="google_maps_key">AIzaSyDNhKxhDFtlFEwgKQHKJkge_0GHBcQReR4</string>
+</resources>
